@@ -1,0 +1,36 @@
+def springVer = "5.0.5.RELEASE"
+def slf4jVer = "1.7.21"
+
+ext {
+    println "Gradle version: $gradle.gradleVersion"
+
+    libs = [
+            //spring
+            springCore    : "org.springframework:spring-core:$springVer",
+            springContext : "org.springframework:spring-context:$springVer",
+            springBeans   : "org.springframework:spring-beans:$springVer",
+            springWeb     : "org.springframework:spring-web:$springVer",
+            springWebmvc  : "org.springframework:spring-webmvc:$springVer",
+            springJdbc    : "org.springframework:spring-jdbc:$springVer",
+
+            //logging
+            slf4jApi      : "org.slf4j:slf4j-api:$slf4jVer",
+            log4jOverSlf4j: "org.slf4j:log4j-over-slf4j:$slf4jVer",
+            logbackClassic: "ch.qos.logback:logback-classic:1.1.7",
+            logbackGelf   : "me.moocar:logback-gelf:0.3",
+
+            //jdbc
+            mysqlJdbc     : "mysql:mysql-connector-java:8.0.11",
+            commonsDBCP   : "commons-dbcp:commons-dbcp:1.4",
+
+
+            apacheCommons : "org.apache.commons:commons-lang3:3.7",
+            apacheIO      : "org.apache.commons:commons-io:1.3.2",
+            orikaMapper   : "ma.glasnost.orika:orika-core:1.5.2",
+
+    ]
+
+    libs.spring = [libs.springCore, libs.springContext, libs.springBeans, libs.springJdbc, libs.springWeb, libs.springWebmvc]
+    libs.springCC = [libs.springCore, libs.springContext, libs.springBeans]
+    libs.logging = [libs.slf4jApi, libs.log4jOverSlf4j, libs.logbackClassic, libs.logbackGelf]
+}

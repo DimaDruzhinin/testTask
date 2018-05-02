@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<!--
+Jetty server configuration file template.
+File is used for automatic generation of jetty.xml while project runs through build process.
+ATTENTION! Don't setup database connection at this file. Do that in "$configDir/application.properties"
+-->
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+    <!-- =========================================================== -->
+    <!-- JNDI DataSource Configuration                               -->
+    <!-- =========================================================== -->
+
+    <New id="cdekTaskDataSource" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg/>
+        <Arg>jdbc/cdekTask</Arg>
+        <Arg>
+            <New class="org.apache.commons.dbcp.BasicDataSource">
+                <Set name="driverClassName">@db.driverClass@</Set>
+                <Set name="url">@db.url@</Set>
+                <Set name="username">@db.username@</Set>
+                <Set name="password">@db.password@</Set>
+                <Set name="initialSize">5</Set>
+                <Set name="maxWait">5000</Set>
+                <Set name="maxActive">20</Set>
+                <Set name="maxIdle">5</Set>
+                <Set name="validationQuery">select 1 from dual</Set>
+            </New>
+        </Arg>
+    </New>
+</Configure>
