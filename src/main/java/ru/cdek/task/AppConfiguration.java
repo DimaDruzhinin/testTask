@@ -14,6 +14,10 @@ import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -28,7 +32,7 @@ import static org.springframework.beans.factory.config.PropertyPlaceholderConfig
 @ComponentScan("ru.cdek.task")
 @EnableTransactionManagement
 @EnableWebMvc
-public class AppConfiguration {
+public class AppConfiguration implements WebMvcConfigurer {
     private static final Logger LOGGER = LoggerFactory.getLogger(AppConfiguration.class);
 
     @Bean
@@ -67,5 +71,26 @@ public class AppConfiguration {
     @Bean
     PlatformTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/pages/");
+        resolver.setSuffix(".html");
+        return resolver;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/pages/**")
+                .addResourceLocations("/pages/");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/list");
+        registry.addViewController("/create");
     }
 }

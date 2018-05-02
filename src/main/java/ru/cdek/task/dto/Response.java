@@ -1,15 +1,24 @@
 package ru.cdek.task.dto;
 
-import ru.cdek.task.status.ResponseStatus;
 import ru.cdek.task.entity.User;
+import ru.cdek.task.status.ResponseStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, инкапсулирующий ответ клиенту.
+ */
 public class Response {
 
+    /**
+     * Статус выполнения операции.
+     */
     private ResponseStatus status;
 
+    /**
+     * Список пользователей.
+     */
     private List<User> users = new ArrayList<>();
 
     public Response(ResponseStatus status) {

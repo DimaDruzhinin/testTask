@@ -14,6 +14,9 @@ public class UserDaoJdbcImpl implements UserDao {
 
     private static final String INSERT_SQL = "insert into user (name) values(?)";
     private static final String SELECT_ALL_SQL = "select * from user";
+    private static final String SELECT_BY_ID_RANGE_SQL = "select * from user where id >= ? and id <= ?";
+    private static final String SELECT_BY_ID_MORE_THAN_SQL = "select * from user where id >= ?";
+    private static final String SELECT_BY_ID_LESS_THAN_SQL = "select * from user where id <= ?";
     private static final String SELECT_SQL = "select * from user where id = ?";
 
     private JdbcTemplate jdbcTemplate;
@@ -33,15 +36,31 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public List<User> getAll() {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(SELECT_ALL_SQL);
+        return mapToList(rows);
+    }
+
+    @Override
+    public List<User> findUsersByIdRange(long minId, long maxId) {
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(SELECT_BY_ID_RANGE_SQL, minId, maxId);
+        return mapToList(rows);
+    }
+
+    @Override
+    public List<User> findUsersByIdMoreThan(long minId) {
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(SELECT_BY_ID_MORE_THAN_SQL, minId);
+        return mapToList(rows);
+    }
+
+    @Override
+    public List<User> findUsersByIdLessThan(long maxId) {
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(SELECT_BY_ID_RANGE_SQL, maxId);
+        return mapToList(rows);
+    }
+
+    private List<User> mapToList(List<Map<String, Object>> rows) {
         return rows
                 .stream()
                 .map(row -> new User((String) row.get("name"), (Long) row.get("id")))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public User getUserById(long id) {
-        return jdbcTemplate.queryForObject(SELECT_SQL, new Object[]{id}, (rs, n) ->
-                new User(rs.getString("name"), rs.getLong("id")));
     }
 }

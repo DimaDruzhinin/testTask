@@ -2,8 +2,14 @@ package ru.cdek.task.entity;
 
 public class User {
 
+    /**
+     * Идентификатор пользователя в хранилище.
+     */
     private Long id;
 
+    /**
+     * Имя пользователя
+     */
     private String name;
 
     public User(String name) {

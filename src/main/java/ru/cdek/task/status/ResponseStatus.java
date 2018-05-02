@@ -1,14 +1,21 @@
 package ru.cdek.task.status;
 
+/**
+ * Статус выполнения операции.
+ */
 public enum ResponseStatus {
 
     SUCCESS(0, "Запрос обработан успешно"),
+
     USER_ALREADY_EXISTS(1, "Запрос корректный, но пользователь с таким именем уже существует"),
+
     INVALID_REQUEST(1, "Запрос не соответствует схеме, либо пользователь не прошел валидацию"),
+
     INTERNAL_ERROR(2, "Внутренняя ошибка сервера");
 
 
     private int code;
+
     private String description;
 
     ResponseStatus(int code) {

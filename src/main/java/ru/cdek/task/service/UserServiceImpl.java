@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.cdek.task.status.ResponseStatus;
 import ru.cdek.task.dao.UserDao;
 import ru.cdek.task.dto.Response;
+import ru.cdek.task.dto.UserFilter;
 import ru.cdek.task.entity.User;
+import ru.cdek.task.status.ResponseStatus;
 import ru.cdek.task.validator.UserValidator;
 
 import java.util.List;
@@ -50,10 +51,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response findAll() {
+    public Response findByFilter(UserFilter filter) {
+        if (!userValidator.validateFilter(filter)) {
+            return new Response(ResponseStatus.INVALID_REQUEST);
+        }
         try {
-            List<User> userList = userDao.getAll();
-            LOGGER.debug("Getting all users. Total count: {}", userList.size());
+            List<User> userList;
+            long minId = filter.getMinId();
+            long maxId = filter.getMaxId();
+            LOGGER.debug("Near getting all users by filter with id from {} to {}", minId, maxId);
+                //открытый диапазон
+            if (minId < 0 && maxId < 0) {
+                userList = userDao.getAll();
+                //ограничен сверху
+            } else if (minId < 0 && maxId >= 0) {
+                userList = userDao.findUsersByIdLessThan(maxId);
+                //ограничен снизу
+            } else if (minId >= 0 && maxId < 0) {
+                userList = userDao.findUsersByIdMoreThan(minId);
+                //ограничен сверху и снизу
+            } else {
+                userList = userDao.findUsersByIdRange(minId, maxId);
+            }
+            LOGGER.debug("Getting users by filter id. Count: {}", userList.size());
             Response response = new Response(ResponseStatus.SUCCESS);
             response.getUsers().addAll(userList);
             return response;
