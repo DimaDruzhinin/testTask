@@ -31,7 +31,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/get", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public Response getByFilter(@RequestBody UserFilter filter) {
-        System.out.println("!!!!!!!!!!");
         return userService.findByFilter(filter);
     }
 

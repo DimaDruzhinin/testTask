@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+    <link rel="stylesheet" href="/task/pages/style.css"/>
+    <script src="/task/pages/list.js" defer></script>
+</head>
+<body>
+<div id="filterContainer">
+    <input id="minId" type="number" min="0"/>
+    <input id="maxId" type="number" min="0"/>
+    <input id="doFilter" type="button" value="Get" onclick="doFilter()"/>
+</div>
+<table id="users">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+    </tr>
+</table>
+</body>
+</html>

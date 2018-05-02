@@ -53,7 +53,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public List<User> findUsersByIdLessThan(long maxId) {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(SELECT_BY_ID_RANGE_SQL, maxId);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(SELECT_BY_ID_LESS_THAN_SQL, maxId);
         return mapToList(rows);
     }
 
