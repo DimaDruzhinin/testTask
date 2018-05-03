@@ -23,10 +23,14 @@ ext {
             mysqlJdbc     : "mysql:mysql-connector-java:8.0.11",
             commonsDBCP   : "commons-dbcp:commons-dbcp:1.4",
 
-
+            //commons
             apacheCommons : "org.apache.commons:commons-lang3:3.7",
             apacheIO      : "org.apache.commons:commons-io:1.3.2",
             orikaMapper   : "ma.glasnost.orika:orika-core:1.5.2",
+
+            //test
+            testng        : "org.testng:testng:6.9.10",
+            mockito       : "org.mockito:mockito-all:1.10.19",
 
     ]
 

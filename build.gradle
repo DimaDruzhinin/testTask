@@ -66,6 +66,9 @@ dependencies {
     compile libs.apacheIO
     compile libs.mysqlJdbc
     compile libs.logging
+
+    testCompile libs.testng
+    testCompile libs.mockito
 }
 task _prepareLogback(type: Copy) {
     def templateUrl = "${configDir}/templates/logback-template.xml"
