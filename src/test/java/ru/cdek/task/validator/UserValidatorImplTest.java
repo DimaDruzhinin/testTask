@@ -1,6 +1,7 @@
 package ru.cdek.task.validator;
 
 import org.testng.annotations.Test;
+import ru.cdek.task.dto.UserFilter;
 import ru.cdek.task.entity.User;
 
 import static org.testng.Assert.assertFalse;
@@ -23,6 +24,16 @@ public class UserValidatorImplTest {
 
     @Test
     public void validateFilterTest() {
-        //todo:
+        UserFilter filter = new UserFilter(-1, -1);
+        assertTrue(userValidator.validateFilter(filter));
+        filter.setMinId(5);
+        assertTrue(userValidator.validateFilter(filter));
+        filter.setMaxId(5);
+        filter.setMinId(-1);
+        assertTrue(userValidator.validateFilter(filter));
+        filter.setMinId(4);
+        assertTrue(userValidator.validateFilter(filter));
+        filter.setMinId(8);
+        assertFalse(userValidator.validateFilter(filter));
     }
 }
