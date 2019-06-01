@@ -4,6 +4,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 buildscript {
     dependencies {
         classpath 'org.akhikhl.gretty:gretty:1.4.0'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1"
 
     }
     repositories {
@@ -20,6 +21,7 @@ repositories {
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'org.akhikhl.gretty'
+apply plugin: "org.sonarqube"
 apply from: 'gradle/dependencies.gradle'
 
 sourceCompatibility = 1.8
@@ -124,4 +126,11 @@ gretty {
             "-XX:+CMSClassUnloadingEnabled",
             "-Dorg.eclipse.jetty.annotations.maxWait=120", // scanning for SCI may take too much time (60 sec is default)
     ]
+}
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.verbose", "true"
+    }
 }
