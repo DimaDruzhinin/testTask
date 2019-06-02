@@ -7,9 +7,6 @@ public class User {
      */
     private Long id;
 
-    /**
-     * Имя пользователя
-     */
     private String name;
 
     public User(String name) {
